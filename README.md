@@ -154,7 +154,7 @@ See **[`CLA.md`](./CLA.md)** for details.
 ## 📄 License
 
 Aathman Core is licensed under the **Apache License 2.0**.  
-See [`LICENSE`](./LICENSE) for more information.
+See [`LICENCE`](./LICENCE) for more information.
 
 
 
