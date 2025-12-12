@@ -7,7 +7,7 @@ a signed Contributor License Agreement (CLA). This ensures that contributed
 code can be used in the open-source Aathman Core as well as in the commercial
 Aathman Enterprise edition.
 
----
+
 
 ## Individual Contributors (ICLA)
 
@@ -15,7 +15,7 @@ If you are contributing as an individual, please review and sign:
 
 **ICLA (PDF)**: https://www.apache.org/licenses/icla.pdf
 
----
+
 
 ## Corporate Contributors (CCLA)
 
@@ -23,7 +23,7 @@ If you are contributing on behalf of your employer, the organization must sign:
 
 **CCLA (PDF)**: https://www.apache.org/licenses/cla-corporate.pdf
 
----
+
 
 ## How Signing Works
 
@@ -35,7 +35,7 @@ After signing, all future pull requests will be automatically verified.
 If your employer needs to sign the CCLA, please contact us so we can
 coordinate the signature process.
 
----
+
 
 ## Questions?
 
@@ -44,6 +44,6 @@ please contact the maintainers:
 
 chethan.da.1715@gmail.com
 
----
+
 
 Thank you for contributing to Aathman Core!
