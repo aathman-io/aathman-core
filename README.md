@@ -140,7 +140,7 @@ Please review **CLA.md** before submitting any contributions.
 
 Aathman is licensed under the **Apache License 2.0**.
 
-Please see the **LICENSE** file for full terms and conditions.
+Please see the **LICENCE** file for full terms and conditions.
 
 ---
 
