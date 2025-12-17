@@ -1,10 +1,12 @@
 # aathman/verify.py
+
 import json
 import sys
 import torch
 from pathlib import Path
 from nacl.signing import VerifyKey
 from fingerprint import compute_fingerprint
+
 
 def canonical_bytes(obj: dict) -> bytes:
     return json.dumps(
@@ -13,6 +15,7 @@ def canonical_bytes(obj: dict) -> bytes:
         separators=(",", ":"),
         ensure_ascii=False
     ).encode("utf-8")
+
 
 def verify_signature(cert: dict) -> None:
     sig_block = cert.get("signature")
@@ -26,6 +29,7 @@ def verify_signature(cert: dict) -> None:
     unsigned.pop("signature", None)
 
     vk.verify(canonical_bytes(unsigned), sig)
+
 
 def diff_blocks(path_a: str, path_b: str, blocks=8):
     a = torch.load(path_a, map_location="cpu")
@@ -41,13 +45,46 @@ def diff_blocks(path_a: str, path_b: str, blocks=8):
 
         step = max(1, n // blocks)
         for i in range(0, n, step):
-            da = ta[i:i+step]
-            db = tb[i:i+step]
+            da = ta[i:i + step]
+            db = tb[i:i + step]
             delta = torch.norm(da - db).item()
             diffs.append((k, i, delta))
 
     diffs.sort(key=lambda x: x[2], reverse=True)
     return diffs[:5]
+
+
+# -----------------------------
+# Library API for PaCM
+# -----------------------------
+
+def verify_model(model_path: str, cert_path: str) -> dict:
+    cert = json.loads(Path(cert_path).read_text(encoding="utf-8"))
+
+    # Signature verification
+    try:
+        verify_signature(cert)
+        signature_valid = True
+    except Exception:
+        signature_valid = False
+
+    # Fingerprint verification
+    recomputed = compute_fingerprint(model_path)
+    expected = cert.get("fingerprint")
+    fingerprint_match = recomputed == expected
+
+    return {
+        "signature_valid": signature_valid,
+        "fingerprint_match": fingerprint_match,
+        "signer_public_key": cert.get("signature", {}).get("public_key"),
+        "parameter_count": cert.get("model_metadata", {}).get("parameter_count"),
+        "valid": signature_valid and fingerprint_match,
+    }
+
+
+# -----------------------------
+# CLI entrypoint (unchanged)
+# -----------------------------
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -85,4 +122,4 @@ if __name__ == "__main__":
     else:
         print("  original model file not found for diagnostics")
 
-    sys.exit(3)
+    sys.exit(3)    
