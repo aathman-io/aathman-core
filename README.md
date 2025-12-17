@@ -125,6 +125,23 @@ Enterprise features remain private and are not distributed publicly.
 
 ---
 
+Programmatic Use
+
+Aathman Core exposes a verify_model() function for programmatic consumption by policy and governance layers.
+
+This function verifies a model file against its certificate and returns structured verification facts, enabling higher-level systems such as Aathman PaCM to enforce organizational policy.
+
+The existing CLI interface remains unchanged.
+
+---
+
+Ecosystem
+
+Aathman Core is designed to be composable.
+Policy enforcement, governance, and authorization are intentionally kept out of the core and handled by external layers such as Aathman PaCM.
+
+---
+
 ## Contributing
 
 Community contributions are welcome.
