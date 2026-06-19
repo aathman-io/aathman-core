@@ -1,5 +1,3 @@
-# aathman/verify.py
-
 import json
 import sys
 import torch
@@ -53,22 +51,15 @@ def diff_blocks(path_a: str, path_b: str, blocks=8):
     diffs.sort(key=lambda x: x[2], reverse=True)
     return diffs[:5]
 
-
-# -----------------------------
-# Library API for PaCM
-# -----------------------------
-
 def verify_model(model_path: str, cert_path: str) -> dict:
     cert = json.loads(Path(cert_path).read_text(encoding="utf-8"))
 
-    # Signature verification
     try:
         verify_signature(cert)
         signature_valid = True
     except Exception:
         signature_valid = False
 
-    # Fingerprint verification
     recomputed = compute_fingerprint(model_path)
     expected = cert.get("fingerprint")
     fingerprint_match = recomputed == expected
@@ -81,11 +72,6 @@ def verify_model(model_path: str, cert_path: str) -> dict:
         "valid": signature_valid and fingerprint_match,
     }
 
-
-# -----------------------------
-# CLI entrypoint (unchanged)
-# -----------------------------
-
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python verify.py model.pth model.pth.aathman.json")
@@ -96,14 +82,12 @@ if __name__ == "__main__":
 
     cert = json.loads(cert_path.read_text(encoding="utf-8"))
 
-    # Step 4A: verify signature
     try:
         verify_signature(cert)
     except Exception:
         print("FAIL: invalid signature")
         sys.exit(2)
 
-    # Step 4B: recompute fingerprint
     recomputed = compute_fingerprint(model_path)
     expected = cert["fingerprint"]
 
@@ -111,7 +95,6 @@ if __name__ == "__main__":
         print("PASS: model verified")
         sys.exit(0)
 
-    # Step 4C: diagnostics
     print("FAIL: fingerprint mismatch")
     print("Diagnostics (top changes):")
 
