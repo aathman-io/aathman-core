@@ -142,17 +142,6 @@ Policy enforcement, governance, and authorization are intentionally kept out of 
 
 ---
 
-## Contributing
-
-Community contributions are welcome.
-
-To contribute code, you must sign a Contributor License Agreement (CLA).  
-This ensures legal clarity for both contributors and maintainers.
-
-Please review **CLA.md** before submitting any contributions.
-
----
-
 ## License
 
 Aathman is licensed under the **Apache License 2.0**.
